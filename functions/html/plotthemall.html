@@ -1,0 +1,196 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>plotthemall</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-06-01"><meta name="DC.source" content="plotthemall.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="keyword">function</span> []=plotthemall(results)
+
+    <span class="keyword">for</span> i=1:size(fieldnames(results),1)
+        fields=fieldnames(results);
+
+        h1=figure;
+        OD2DHFConverter(h1,results.(fields{i}).trODs,results.(fields{i}).exCoeff,<span class="keyword">...</span>
+                        results.(fields{i}).excludelowdhf,results.(fields{i}).excludehighdhf,<span class="keyword">...</span>
+                        results.(fields{i}).numdatapts,results.(fields{i}).dhfconcsmm);
+
+
+        h2=figure;
+        mmplotter(h2,results.(fields{i}).DHF,results.(fields{i}).fitDHF,<span class="keyword">...</span>
+                    results.(fields{i}).fitPTs,results.(fields{i}).protconcsmm);
+        hold <span class="string">on</span>
+        suptitle(<span class="string">'[DHF] vs Velocity Plot'</span>);
+
+
+
+        h3=figure(<span class="string">'Name'</span>,<span class="string">'Ki Fits'</span>);
+
+        disp([<span class="string">'Fit Range for inhibition fits: '</span><span class="keyword">...</span>
+            num2str(results.(fields{i}).stts.range(1)) <span class="string">':'</span> num2str(results.(fields{i}).stts.range(end))]);
+        hold <span class="string">on</span>
+        <span class="keyword">for</span> k=1:size(results.(fields{i}).inhlist,1)
+            x=0:60;
+            y=results.(fields{i}).DHF4Ki(:,k);
+            plot(x,y,<span class="string">'-ok'</span>,<span class="string">'MarkerFaceColor'</span>,[((k-1)/size(results.(fields{i}).inhlist,1)),0,1]);
+            hold <span class="string">on</span>
+
+        <span class="keyword">end</span>
+        kirobustfitter(h3,results.(fields{i}).DHF4Ki);
+        hold <span class="string">on</span>
+        xlabel(<span class="string">'Time (sec)'</span>,<span class="string">'FontSize'</span>,14)
+        ylabel(<span class="string">'[DHF] (\muM)'</span>,<span class="string">'FontSize'</span>,14)
+        grid <span class="string">on</span>
+        title(<span class="string">'Decrease in Initial DHFR Activity with Increasing [TMP]'</span>)
+
+
+        range=0:.01:1200;
+        h4=figure;
+        title(<span class="string">'Inhibition of DHFR with increasing [TMP]'</span>);
+        hold <span class="string">on</span>
+        plot(results.(fields{i}).tmpconcfits(:,1),results.(fields{i}).tmpconcfits(:,2)*1000,<span class="string">'ok'</span>,<span class="keyword">...</span>
+            range,results.(fields{i}).kifitted*1000,<span class="string">'r'</span>);
+        hold <span class="string">on</span>
+        xlabel(<span class="string">'[TMP] (nM)'</span>)
+        ylabel(<span class="string">'V_0(nM/sec)'</span>)
+        grid <span class="string">on</span>
+        textbp({[<span class="string">'Vmax: '</span> num2str(round(1E3*results.(fields{i}).kifitresults.Vmax,2)) <span class="string">' nM/sec'</span>];<span class="keyword">...</span>
+            [<span class="string">'K_i: '</span> num2str(round(results.(fields{i}).kifitresults.Ki,2)) <span class="string">' nM'</span>];<span class="keyword">...</span>
+            [<span class="string">'R^2: '</span> num2str(round(results.(fields{i}).kifitresults.rsqr,2))];<span class="keyword">...</span>
+            [<span class="string">'IC_{50}: '</span> num2str(round(results.(fields{i}).kifitresults.IC50,2)) <span class="string">' nM'</span>] },<span class="string">'FontSize'</span>,15);
+        hold <span class="string">on</span>
+        plot(results.(fields{i}).kifitresults.IC50,((results.(fields{i}).kifitresults.Vmax*mode(results.(fields{i}).dhfconcsinh))/<span class="keyword">...</span>
+            ((results.(fields{i}).UsedKm*(1+results.(fields{i}).kifitresults.IC50/results.(fields{i}).kifitresults.Ki))<span class="keyword">...</span>
+            +mode(results.(fields{i}).dhfconcsinh)))*1000,<span class="string">'ok'</span>,<span class="string">'MarkerFaceColor'</span>,<span class="string">'r'</span>);
+
+
+    <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function []=plotthemall(results)
+    
+    for i=1:size(fieldnames(results),1)
+        fields=fieldnames(results);
+
+        h1=figure;
+        OD2DHFConverter(h1,results.(fields{i}).trODs,results.(fields{i}).exCoeff,...
+                        results.(fields{i}).excludelowdhf,results.(fields{i}).excludehighdhf,...
+                        results.(fields{i}).numdatapts,results.(fields{i}).dhfconcsmm);
+        
+
+        h2=figure;
+        mmplotter(h2,results.(fields{i}).DHF,results.(fields{i}).fitDHF,...
+                    results.(fields{i}).fitPTs,results.(fields{i}).protconcsmm);
+        hold on
+        suptitle('[DHF] vs Velocity Plot');
+
+
+
+        h3=figure('Name','Ki Fits');
+       
+        disp(['Fit Range for inhibition fits: '...
+            num2str(results.(fields{i}).stts.range(1)) ':' num2str(results.(fields{i}).stts.range(end))]);
+        hold on
+        for k=1:size(results.(fields{i}).inhlist,1)
+            x=0:60;
+            y=results.(fields{i}).DHF4Ki(:,k);
+            plot(x,y,'-ok','MarkerFaceColor',[((k-1)/size(results.(fields{i}).inhlist,1)),0,1]);
+            hold on
+
+        end
+        kirobustfitter(h3,results.(fields{i}).DHF4Ki);
+        hold on
+        xlabel('Time (sec)','FontSize',14)
+        ylabel('[DHF] (\muM)','FontSize',14)
+        grid on
+        title('Decrease in Initial DHFR Activity with Increasing [TMP]')
+
+        
+        range=0:.01:1200;
+        h4=figure;
+        title('Inhibition of DHFR with increasing [TMP]');
+        hold on
+        plot(results.(fields{i}).tmpconcfits(:,1),results.(fields{i}).tmpconcfits(:,2)*1000,'ok',...
+            range,results.(fields{i}).kifitted*1000,'r');
+        hold on
+        xlabel('[TMP] (nM)')
+        ylabel('V_0(nM/sec)')
+        grid on
+        textbp({['Vmax: ' num2str(round(1E3*results.(fields{i}).kifitresults.Vmax,2)) ' nM/sec'];...
+            ['K_i: ' num2str(round(results.(fields{i}).kifitresults.Ki,2)) ' nM'];...
+            ['R^2: ' num2str(round(results.(fields{i}).kifitresults.rsqr,2))];...
+            ['IC_{50}: ' num2str(round(results.(fields{i}).kifitresults.IC50,2)) ' nM'] },'FontSize',15);
+        hold on
+        plot(results.(fields{i}).kifitresults.IC50,((results.(fields{i}).kifitresults.Vmax*mode(results.(fields{i}).dhfconcsinh))/...
+            ((results.(fields{i}).UsedKm*(1+results.(fields{i}).kifitresults.IC50/results.(fields{i}).kifitresults.Ki))...
+            +mode(results.(fields{i}).dhfconcsinh)))*1000,'ok','MarkerFaceColor','r');
+        
+        
+    end
+    
+end
+##### SOURCE END #####
+--></body></html>
