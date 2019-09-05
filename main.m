@@ -37,6 +37,7 @@ excludelowdhf=0;
 excludehighdhf=25;
 numdatapts=20;
 kifitstart=10;
+kifitlen=10;
 if ispc
     slash='\';
 else
@@ -206,7 +207,7 @@ end
 
 
 
-[Kifits]=kirobustfitter(h5,sortedDHF4Ki,kifitstart);
+[Kifits]=kirobustfitter(h5,sortedDHF4Ki,kifitstart,kifitlen);
 
 suptitle('Decrease in Initial DHFR Activity with Increasing [TMP]')
 
@@ -249,7 +250,7 @@ kipoint=semilogx(kifitresults.Ki,((kifitresults.Vmax*mode(dhfconcsinh))/...
     ((UsedKm*(1+kifitresults.Ki/kifitresults.Ki))+mode(dhfconcsinh)))*1000,'ok','MarkerFaceColor','b','MarkerSize',10);
 f=legend([ic50point,kipoint],'IC50','Ki');
 set(f,'FontSize',16);
-
+ylim([0 max(100,max(tmpconcfits(rrange,2)*1000))]);
 
 
 
@@ -257,23 +258,25 @@ set(f,'FontSize',16);
 savebttn=uicontrol('Style', 'pushbutton', 'String', 'Save Results',...
     'Position', [410 341 100 50],'Callback',@resumescript);
 uiwait()
-ylim([0 max(100,max(tmpconcfits(rrange,2)*1000))]);
+
+delete(savebttn)
 
 % Save Graphs
 saveresults=questdlg('Do you want to save figures?','Save Figures','Yes','No','');
 switch saveresults
     case 'Yes'
-        graphfolder=['Results' slash ProteinID slash FolderName slash 'Graphs'];
+        graphfolder=['Results' slash ProteinID slash FolderName slash 'Graphs'];%
         if exist(graphfolder,'file')==7
             disp(['Graphs folder exists in ' graphfolder])
         else
             mkdir(graphfolder)
         end
-        save_figure(h2, graphfolder , '1_ExtrapolatedRawData.png')
-        save_figure(h3, graphfolder , '2_ConvertedDataWithFits.png')
+        save_figure(h2, graphfolder , '1_ExtrapolatedRawData')
+        save_figure(h3, graphfolder , '2_ConvertedDataWithFits')
         save_figure(h4, graphfolder , '3_KcatKm' )
-        save_figure(h5, graphfolder , '4_DHFvsTime_IncreasingTMP.png')
-  
+        save_figure(h5, graphfolder , '4_DHFvsTime_IncreasingTMP')
+        save_figure(h6, graphfolder , '5_Ki')
+        save_parameters(graphfolder,excludelowdhf,excludehighdhf,numdatapts,kifitstart,kifitlen)
     case 'No'
         warndlg('As you wish! :D')       
 end

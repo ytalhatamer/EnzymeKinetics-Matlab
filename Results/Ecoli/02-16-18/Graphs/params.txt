@@ -1,0 +1,5 @@
+[DHF]_{Lowest} Included in Km Calculation: 0
+[DHF]_{Highest} Included in Km Calculation: 25
+Number of Data Points in Km Calculation: 20
+Ki Fits starts from time point :10
+Length of Ki Fits: 10

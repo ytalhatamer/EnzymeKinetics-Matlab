@@ -1,4 +1,4 @@
-function [fits]=kirobustfitter(~,data,fitstart)
+function [fits]=kirobustfitter(~,data,fitstart,kifitlen)
     fitstartpt=fitstart; 
 %     stats=struct();
 %     for i=4:10
@@ -17,7 +17,7 @@ function [fits]=kirobustfitter(~,data,fitstart)
 %     [Irow,Icol]=ind2sub(size(stats.sumresids),ind);
 %     stats.range=Irow:(10+Irow+Icol);
 %     fitstartpt=30%15;
-    fitlen=10;
+    fitlen=kifitlen;
     
     for k=1:size(data,2)
         y=data(:,k);
